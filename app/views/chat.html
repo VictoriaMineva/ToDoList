@@ -1,0 +1,13 @@
+<div class="container">
+    <h3>Chat</h3>
+    <form class="chatForm">
+	  <input placeholder="Message..." ng-model="newMessage" class="input-sm" id="chatMessage">
+	  <button type="submit" ng-click="addMessage(newMessage);newMessage = null;" class="btn btn-primary" id="messageSend">Send</button>
+	</form><div style="clear: both"></div>
+	<div ng-repeat="message in messages | reverse" class="chatMessageContainer">
+		<div id="messageText">{{message.creator}} says: <strong>{{message.text}}</strong></div>
+		<div style="float: right;">{{message.date | date:'medium'}}</div>
+		<div style="clear: both"></div>
+	</div>
+</div>
+

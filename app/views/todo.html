@@ -1,0 +1,55 @@
+ <div class="container">
+    <h3>To Do:</h3><br/>
+    <div class="taskList">
+      <div ng-class="mydata.status === true ? 'doneTaskContainer' : 'toDoTaskContainer'"
+            ng-repeat="mydata in data | orderBy: 'deadline' | filter: { status: false }">
+        <input type="checkbox" class="doneCheckBox" value="{{mydata.status}}" ng-change='isDone(mydata.$id, mydata.status)' ng-model="mydata.status">
+        <div class="taskText"><strong>{{mydata.task}}</strong></div>  
+        <input type="image" src="images/delete.png" height="30px" width="30px" style="float: right; margin-left: 10px;" alt="Delete" 
+               ng-click="removeTask(mydata.$id)">
+        <input type="image" src="images/edit.png" height="30px" width="30px" style="float: right;" alt="Edit"
+               data-toggle="modal" data-target="#{{mydata.$id}}">
+
+        <div class="taskDeadline">{{mydata.deadline | date:'medium'}}</div>
+        <div style="clear: both"></div>
+        <div style="float: left; font-size: x-small">Created by: {{mydata.createdBy}}</div>
+        <div style="float: left; font-size: x-small; margin-left: 5px;">/ Edited by: {{mydata.editedBy}}</div>
+        <div style="clear: both"></div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="{{mydata.$id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit task</h4>
+              </div>
+              <div class="modal-body">
+                <input class="input-sm" ng-model="mydata.task" type="text" />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="editTask(mydata.$id, mydata.task)" data-dismiss="modal">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="addTaskForm">
+      <form name="addTaskForm" ng-submit="addTask(newTask.task, newTask.deadline)"> 
+        <div class="emptyTaskContainer">
+          <div style="float: left; margin-left: 5px; width: 365px;"><strong>{{newTask.task}}</strong></div>
+          <div style="float: right;">{{newTask.deadline | date:'medium'}}</div>
+          <div style="clear: both"></div>
+        </div>
+        
+        <input id="taskDescription" class="input-sm" ng-model="newTask.task" type="text" placeholder="New task..."/>
+        <input id="taskDateDeadline" class="input-sm" ng-model="newTask.deadline" type="date" />
+        <input id="taskTimeDeadline" class="input-sm" ng-model="newTask.deadline" type="time" />
+        <button type="submit" class="btn btn-primary" id="taskSubmit">Add task</button>
+      </form>
+    </div><br/>
+  </div>
